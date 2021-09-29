@@ -6,7 +6,298 @@
           box-sizing: border-box;
 }
 
+h1,
+p,
+button,
+input {
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400;
+}
+
+li {
+  list-style-type: none;
+}
+
 body {
-  font-family: 'Josefin Sans', sans-serif;
+  background-color: #fafafa;
+  background-image: url("../images/bg-mobile-light.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.bgHelper {
+  width: 20rem;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header h1 {
+  color: #fafafa;
+  font-weight: 700;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+
+header button {
+  width: 18px;
+  height: 18px;
+  background-image: url("../images/icon-moon.svg");
+  background-color: transparent;
+  border: none;
+  background-position: center;
+  background-size: cover;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+header button:hover, header button:focus {
+  cursor: pointer;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.btn_listCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 1px solid #d2d3db;
+  background-color: transparent;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn_listCircle:hover, .btn_listCircle:focus {
+  cursor: pointer;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.btn_removeItem {
+  width: 13px;
+  height: 13px;
+  background-image: url("../images/icon-cross.svg");
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  background-position: center;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn_removeItem:hover, .btn_removeItem:focus {
+  cursor: pointer;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+main #addItemBox {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background-color: white;
+  margin-top: 2rem;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+main #addItemBox button {
+  vertical-align: middle;
+}
+
+main #addItemBox input {
+  height: 28px;
+  margin-left: 7px;
+  padding: 0.3rem;
+  vertical-align: middle;
+  width: 75%;
+  font-size: 0.7rem;
+  color: #484b6a;
+  border: none;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+main #listBox {
+  margin-top: 1rem;
+  border-radius: 8px;
+  background-color: white;
+  -webkit-box-shadow: 0 0 20px -7px #9394a5;
+          box-shadow: 0 0 20px -7px #9394a5;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+main #listBox .listItem {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px solid #e4e5f1;
+}
+
+main #listBox .listItem p {
+  width: 80%;
+  font-size: 0.8rem;
+  color: #484b6a;
+}
+
+main #listBox .listItem.itemCompleted .btn_listCircle {
+  background: -webkit-gradient(linear, left top, right bottom, from(#57ddff), to(#c058f3));
+  background: linear-gradient(to bottom right, #57ddff, #c058f3);
+  position: relative;
+}
+
+main #listBox .listItem.itemCompleted .btn_listCircle::after {
+  position: absolute;
+  top: 2px;
+  left: 1px;
+  right: 0;
+  bottom: 0;
+  content: url("../images/icon-check.svg");
+}
+
+main #listBox .listItem.itemCompleted p {
+  color: #d2d3db;
+  text-decoration: line-through;
+}
+
+main #listBox .bottomInfo {
+  padding: 0.5rem;
+  padding-left: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main #listBox .bottomInfo p {
+  font-size: 0.7rem;
+  color: #9394a5;
+}
+
+main #listBox .bottomInfo button {
+  color: #9394a5;
+  background-color: transparent;
+  border: none;
+  font-size: 0.7rem;
+  padding: 0.5rem;
+}
+
+main #listFunctionsBox {
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background-color: white;
+  -webkit-box-shadow: 0 0 20px -7px #9394a5;
+          box-shadow: 0 0 20px -7px #9394a5;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+main #listFunctionsBox button {
+  color: #9394a5;
+  background-color: transparent;
+  padding: 0.5rem;
+  border: none;
+  font-size: 0.8rem;
+  margin: 0 5px;
+  font-weight: 700;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+main #listFunctionsBox button.functionActive {
+  color: #3a7bfd;
+}
+
+main #listFunctionsBox button:focus, main #listFunctionsBox button:hover {
+  cursor: pointer;
+  color: #3a7bfd;
+}
+
+footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: #9394a5;
+}
+
+body.darkTheme {
+  background-color: #161722;
+  background-image: url("../images/bg-mobile-dark.jpg");
+}
+
+body.darkTheme .btn_listCircle {
+  border: 1px solid #4d5066;
+}
+
+body.darkTheme header button {
+  background-image: url("../images/icon-sun.svg");
+}
+
+body.darkTheme main #addItemBox {
+  background-color: #25273c;
+}
+
+body.darkTheme main #addItemBox input {
+  background-color: #25273c;
+  color: #cacde8;
+}
+
+body.darkTheme main #listBox {
+  background-color: #25273c;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+body.darkTheme main #listBox .listItem p {
+  color: #cacde8;
+}
+
+body.darkTheme main #listBox .bottomInfo p,
+body.darkTheme main #listBox .bottomInfo button {
+  color: #4d5066;
+}
+
+body.darkTheme main #listFunctionsBox {
+  background-color: #25273c;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+body.darkTheme main #listFunctionsBox button {
+  color: #4d5066;
+}
+
+body.darkTheme footer p {
+  color: #4d5066;
 }
 /*# sourceMappingURL=main.css.map */

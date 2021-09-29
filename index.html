@@ -13,34 +13,54 @@
     <script src="./js/main.js" defer></script>
     <title>Frontend Mentor | Todo app | shantam8</title>
   </head>
-  <body>
-    <div class="gbHelper">
+  <body >
+    <div class="bgHelper">
       <header>
-        <h1 class="logo">Todo</h1>
-        <button class="toggleTheme"></button>
+        <h1 id="logo">Todo</h1>
+        <button id="btnToggleTheme"></button>
       </header>
       <main>
-        <div class="listBox">
-          <div class="listItem">
+        <div id="addItemBox">
+
+          
+          <div id="addListItem">
             <button class="btn_listCircle"></button>
-            <p class="listText"></p>
-            <button class="btn_removeItem"></button>
+            <input type="text" placeholder="Create a new todo...">
           </div>
         </div>
-
-        <div class="bottomInfo">
-          <p>
-            <span class="numberItemsLeft"></span>
-            items left
-          </p>
-
-          <button class="btn_clear"></button>
+        
+        <div id="listBox">
+          <ul>
+            <li class="listItem">
+              <button class="btn_listCircle"></button>
+              <p class="listText">Testing</p>
+              <button class="btn_removeItem"></button>
+            </li>
+            <li class="listItem itemCompleted">
+              <button class="btn_listCircle"></button>
+              <p class="listText">Testing</p>
+              <button class="btn_removeItem"></button>
+            </li>
+            <li class="listItem">
+              <button class="btn_listCircle"></button>
+              <p class="listText">Testing</p>
+              <button class="btn_removeItem"></button>
+            </li>
+          </ul>
+          <div class="bottomInfo">
+            <p>
+              <span class="numberItemsLeft">6</span>
+              items left
+            </p>
+            
+            <button class="btn_clear">Clear Completed</button>
+          </div>
+          
         </div>
-
-        <div class="bottombottomInfo">
-          <button class="btn_showAll">All</button>
-          <button class="btn_showActive">Active</button>
-          <button class="btn_showCompleted">Completed</button>
+        <div id="listFunctionsBox">
+          <button id="btn_showAll" value="showAll">All</button>
+          <button id="btn_showActive" value="showActive">Active</button>
+          <button id="btn_showCompleted" value="showCompleted">Completed</button>
         </div>
       </main>
 

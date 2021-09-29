@@ -1,14 +1,281 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap");
 @import "colors";
 @import "mixins";
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+h1,
+p,
+button,
+input {
+  font-family: "Josefin Sans", sans-serif; // 4 7
+  font-weight: 400;
+}
 
-body{
-    font-family: 'Josefin Sans', sans-serif; // 4 7
+li {
+  list-style-type: none;
+}
+
+body {
+  background-color: $veryLightGray;
+  background-image: url("../images/bg-mobile-light.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+  transition: all 0.2s ease-in-out;
+}
+
+.bgHelper {
+  width: 20rem;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    color: $veryLightGray;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+  }
+
+  button {
+    width: 18px;
+    height: 18px;
+    background-image: url("../images/icon-moon.svg");
+    background-color: transparent;
+    border: none;
+    background-position: center;
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+
+    &:hover, &:focus{
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+  }
+}
+
+.btn_listCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  border: 1px solid $lightGrayishBlue;
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+  &:hover, &:focus{
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+}
+
+.btn_removeItem {
+  width: 13px;
+  height: 13px;
+  background-image: url("../images/icon-cross.svg");
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  background-position: center;
+  transition: all 0.2s ease-in-out;
+
+  &:hover, &:focus{
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+}
+
+main {
+  #addItemBox {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background-color: white;
+    margin-top: 2rem;
+    transition: all 0.2s ease-in-out;
+
+    button {
+      vertical-align: middle;
+    }
+
+    input {
+      height: 28px;
+      margin-left: 7px;
+      padding: 0.3rem;
+      vertical-align: middle;
+      width: 75%;
+      font-size: 0.7rem;
+      color: $veryDarkGrayishBlue;
+      border: none;
+      transition: 0.2s ease-in-out;
+    }
+  }
+
+  #listBox {
+    margin-top: 1rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 0 20px -7px $darkGrayishBlue;
+    transition: all 0.2s ease-in-out;
+
+    .listItem {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid $veryLightGrayishBlue;
+
+      p {
+        width: 80%;
+        font-size: 0.8rem;
+        color: $veryDarkGrayishBlue;
+      }
+
+      &.itemCompleted{
+
+        .btn_listCircle{
+          background: linear-gradient(to bottom right, $gradientColor1, $gradientColor2);
+          position: relative;
+
+          &::after{
+            position: absolute;
+            top: 2px;
+            left: 1px;
+            right: 0;
+            bottom: 0;
+            content: url("../images/icon-check.svg");
+          }
+        }
+
+        p{
+          color: $lightGrayishBlue
+          ;
+
+          text-decoration: line-through;
+        }
+      }
+    }
+
+    .bottomInfo {
+      padding: 0.5rem;
+      padding-left: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        font-size: 0.7rem;
+        color: $darkGrayishBlue;
+      }
+
+      button {
+        color: $darkGrayishBlue;
+        background-color: transparent;
+        border: none;
+        font-size: 0.7rem;
+        padding: 0.5rem;
+      }
+    }
+  }
+
+  #listFunctionsBox {
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 0 20px -7px $darkGrayishBlue;
+    transition: all 0.2s ease-in-out;
+
+    button {
+      color: $darkGrayishBlue;
+      background-color: transparent;
+      padding: 0.5rem;
+      border: none;
+      font-size: 0.8rem;
+      margin: 0 5px;
+      font-weight: 700;
+      transition: all 0.2s ease-in-out;
+
+      &.functionActive {
+        color: $brightBlue;
+      }
+
+      &:focus,
+      &:hover{
+        cursor: pointer;
+        color: $brightBlue;
+      }
+    }
+  }
+}
+
+footer {
+  margin-top: 3rem;
+  text-align: center;
+
+  p {
+    font-size: 0.8rem;
+    color: $darkGrayishBlue;
+  }
+}
+
+body.darkTheme {
+  background-color: $veryDarkBlueDarkTheme;
+  background-image: url("../images/bg-mobile-dark.jpg");
+
+  .btn_listCircle {
+    border: 1px solid $veryDarkGrayishBlueDarkTheme;
+  }
+
+  header button {
+    background-image: url("../images/icon-sun.svg");
+  }
+
+  main {
+    #addItemBox {
+      background-color: $veryDarkDesaturatedBlueDarkTheme;
+      input {
+        background-color: $veryDarkDesaturatedBlueDarkTheme;
+        color: $lightGrayishBlueDarkTheme;
+      }
+    }
+
+    #listBox {
+      background-color: $veryDarkDesaturatedBlueDarkTheme;
+      box-shadow: none;
+
+      .listItem p {
+        color: $lightGrayishBlueDarkTheme;
+      }
+
+      .bottomInfo {
+        p,
+        button {
+          color: $veryDarkGrayishBlueDarkTheme;
+        }
+      }
+    }
+
+    #listFunctionsBox {
+      background-color: $veryDarkDesaturatedBlueDarkTheme;
+      box-shadow: none;
+
+      button {
+        color: $veryDarkGrayishBlueDarkTheme;
+      }
+    }
+  }
+
+  footer {
+    p {
+      color: $veryDarkGrayishBlueDarkTheme;
+    }
+  }
 }
