@@ -24,32 +24,17 @@
 
           
           <div id="addListItem">
-            <button class="btn_listCircle"></button>
-            <input type="text" placeholder="Create a new todo...">
+            <button id="btnInputItemCompleted" class="btn_listCircle"></button>
+            <input id="inputItem" type="text" placeholder="Create a new todo...">
           </div>
         </div>
         
         <div id="listBox">
-          <ul>
-            <li class="listItem">
-              <button class="btn_listCircle"></button>
-              <p class="listText">Testing</p>
-              <button class="btn_removeItem"></button>
-            </li>
-            <li class="listItem itemCompleted">
-              <button class="btn_listCircle"></button>
-              <p class="listText">Testing</p>
-              <button class="btn_removeItem"></button>
-            </li>
-            <li class="listItem">
-              <button class="btn_listCircle"></button>
-              <p class="listText">Testing</p>
-              <button class="btn_removeItem"></button>
-            </li>
+          <ul id="listBoxUlContainer">
           </ul>
           <div class="bottomInfo">
             <p>
-              <span class="numberItemsLeft">6</span>
+              <span id="numberItemsLeft">6</span>
               items left
             </p>
             
@@ -58,7 +43,7 @@
           
         </div>
         <div id="listFunctionsBox">
-          <button id="btn_showAll" value="showAll">All</button>
+          <button id="btn_showAll" class="functionActive" value="showAll">All</button>
           <button id="btn_showActive" value="showActive">Active</button>
           <button id="btn_showCompleted" value="showCompleted">Completed</button>
         </div>
