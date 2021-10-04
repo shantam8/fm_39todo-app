@@ -1,6 +1,7 @@
 let body = document.querySelector("body");
 let btnToggleTheme = document.querySelector("#btnToggleTheme");
 let btnsFunctionBar = document.querySelectorAll("#listFunctionsBox button");
+let activeFunction = "showAll";
 
 let inputItem = document.querySelector("#inputItem");
 let btnInputItemCompleted = document.querySelector("#btnInputItemCompleted");
@@ -8,61 +9,78 @@ let btnInputItemCompleted = document.querySelector("#btnInputItemCompleted");
 let listBoxUlContainer = document.getElementById("listBoxUlContainer");
 let listItems = document.getElementsByClassName("listItem");
 let btnsToggleItemCompleted = document.getElementsByClassName("btn_listCircle");
+let btnClearCompleted = document.querySelector("#btn_clear");
 
 let numberItemsLeft = document.querySelector("#numberItemsLeft");
 
-let itemListArray = ["123", "456", "789"];
+let itemListArray = [];
 
 function toggleColorTheme() {
   body.classList.toggle("darkTheme");
 }
 
 function toggleShowElements(event) {
-  console.log(event.target);
-
   btnsFunctionBar.forEach((button) => {
     button.classList.remove("functionActive");
   });
   event.target.classList.add("functionActive");
-  console.log(typeof listItems);
 
+  if (event.target.value == "showActive") {
+    activeFunction = "showActive";
+  } else if (event.target.value == "showCompleted") {
+    activeFunction = "showCompleted";
+  } else {
+    activeFunction = "showAll";
+  }
+  displayList();
+}
+
+function displayList() {
   for (let i = 0; i < listItems.length; i++) {
     listItems[i].style.display = "flex";
   }
-
   let counter = 0;
-  if (event.target.value == "showActive") {
-    for (let i = 0; i < listItems.length; i++) {
-      if (listItems[i].classList.contains("itemCompleted")) {
-        listItems[i].style.display = "none";
-      } else {
-        counter++;
+
+  switch (activeFunction) {
+    case "showAll":
+      displayNumberItemsLeft();
+
+      break;
+    case "showActive":
+      for (let i = 0; i < listItems.length; i++) {
+        if (listItems[i].classList.contains("itemCompleted")) {
+          listItems[i].style.display = "none";
+        } else {
+          counter++;
+        }
       }
-    }
-    displayNumberItemsLeft(counter);
-  } else if (event.target.value == "showCompleted") {
-    for (let i = 0; i < listItems.length; i++) {
-      if (!listItems[i].classList.contains("itemCompleted")) {
-        listItems[i].style.display = "none";
-      } else {
-        counter++;
+      console.log("active " + counter);
+
+      displayNumberItemsLeft(counter);
+      break;
+
+    case "showCompleted":
+      for (let i = 0; i < listItems.length; i++) {
+        if (!listItems[i].classList.contains("itemCompleted")) {
+          listItems[i].style.display = "none";
+        } else {
+          counter++;
+        }
       }
-    }
-    displayNumberItemsLeft(counter);
+      displayNumberItemsLeft(counter);
+      break;
   }
 }
 
-
-
-
-
-function toggleItemCompleted(event) {
-  console.log(event.target.parentElement);
-
-  event.target.parentElement.classList.toggle("itemCompleted");
+function displayNumberItemsLeft(numberItemsDisplayed) {
+  if (numberItemsDisplayed != null) {
+    numberItemsLeft.innerText = numberItemsDisplayed;
+  } else {
+    numberItemsLeft.innerText = itemListArray.length;
+  }
 }
 
-function addItemHandler(event) {
+function addItemHandler() {
   let doubleEntry = false;
   itemListArray.forEach((item) => {
     if (item == inputItem.value) {
@@ -75,20 +93,41 @@ function addItemHandler(event) {
     inputItem.value = "";
     return;
   }
-
   itemListArray.push(inputItem.value);
-  saveListToLocalStorage();
-  console.log(itemListArray);
   listBoxUlContainer.appendChild(createListElement(inputItem.value));
-  displayNumberItemsLeft();
+  saveListToLocalStorage();
+  displayList();
   inputItem.value = "";
 }
 
-function displayList() {
-  itemListArray.forEach((item) => {
-    listBoxUlContainer.appendChild(createListElement(item));
+function handleClearCompleted() {
+  for (let i = listItems.length - 1; i >= 0; i--) {
+    if (listItems[i].classList.contains("itemCompleted")) {
+      listItems[i].lastChild.click();
+    }
+  }
+}
+
+function removeListItem(event) {
+  event.target.previousSibling.previousSibling.removeEventListener(
+    "click",
+    toggleItemCompleted
+  );
+  event.target.removeEventListener("click", removeListItem);
+  event.target.parentElement.remove();
+
+  itemListArray = itemListArray.filter((value) => {
+    if (value != event.target.previousSibling.innerText) {
+      return value;
+    }
   });
-  displayNumberItemsLeft();
+  displayList();
+  saveListToLocalStorage();
+}
+
+function toggleItemCompleted(event) {
+  event.target.parentElement.classList.toggle("itemCompleted");
+  displayList();
 }
 
 function createListElement(item) {
@@ -109,39 +148,63 @@ function createListElement(item) {
   newLiElement.appendChild(newListTextElement);
   newLiElement.appendChild(newButtonRemoveItemElement);
 
+
+
+  newLiElement.setAttribute("draggable", true);
+
+  newLiElement.addEventListener("dragstart", handleDragStart);
+  newLiElement.addEventListener("drag", handleDrag);
+
+  newLiElement.addEventListener("dragend", handleDragEnd);
+
+
   return newLiElement;
 }
 
-function removeListItem(event) {
-  event.target.previousSibling.previousSibling.removeEventListener(
-    "click",
-    toggleItemCompleted
-  );
-  event.target.removeEventListener("click", removeListItem);
-  event.target.parentElement.remove();
-
-  itemListArray = itemListArray.filter((value) => {
-    if (value != event.target.previousSibling.innerText) {
-      return value;
-    }
-  });
-  displayNumberItemsLeft();
-  saveListToLocalStorage();
+function handleDragStart(event){
+  // console.log("start");
+  // console.log(event.target);
+  event.dataTransfer.setData("text/plain", "test");
+  event.target.style.outline = "1px solid red";
 }
 
-function displayNumberItemsLeft(numberItemsDisplayed) {
-  if (numberItemsDisplayed) {
-    numberItemsLeft.innerText = numberItemsDisplayed;
-  } else {
-    numberItemsLeft.innerText = itemListArray.length;
-  }
+function handleDrag(event){
+  // console.log("drag");
+  // console.log(event.target);
+}
+
+function handleDragEnd(event){
+  // console.log("end");
+  // console.log(event.target);
+  event.target.style.outline = "none";
+}
+
+function handleDragOver(event){
+
+  console.log("over");
+  console.log(event.target);
+
 }
 
 function saveListToLocalStorage() {
   window.localStorage.setItem("ToDo-list", itemListArray);
 }
 
+function loadListFromLocalStorage() {
+  if (window.localStorage.getItem("ToDo-list")) {
+    itemListArray = window.localStorage.getItem("ToDo-list").split(",");
+  }
+}
+
+function createListOnStart() {
+  itemListArray.forEach((item) => {
+    listBoxUlContainer.appendChild(createListElement(item));
+  });
+}
+
 function init() {
+  loadListFromLocalStorage();
+  createListOnStart();
   displayList();
 
   btnToggleTheme.addEventListener("click", toggleColorTheme);
@@ -150,6 +213,10 @@ function init() {
   btnsFunctionBar.forEach((button) => {
     button.addEventListener("click", toggleShowElements);
   });
+
+  btnClearCompleted.addEventListener("click", handleClearCompleted);
+
+  listBoxUlContainer.addEventListener("dragover", handleDragOver)
 }
 
 window.onload = init;

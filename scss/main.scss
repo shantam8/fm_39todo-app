@@ -56,7 +56,8 @@ header {
     background-size: cover;
     transition: all 0.2s ease-in-out;
 
-    &:hover, &:focus{
+    &:hover,
+    &:focus {
       cursor: pointer;
       transform: scale(1.2);
     }
@@ -70,10 +71,7 @@ header {
   border: 1px solid $lightGrayishBlue;
   background-color: transparent;
   transition: all 0.2s ease-in-out;
-  &:hover, &:focus{
-    cursor: pointer;
-    transform: scale(1.1);
-  }
+  position: relative;
 }
 
 .btn_removeItem {
@@ -86,7 +84,8 @@ header {
   background-position: center;
   transition: all 0.2s ease-in-out;
 
-  &:hover, &:focus{
+  &:hover,
+  &:focus {
     cursor: pointer;
     transform: scale(1.1);
   }
@@ -137,13 +136,16 @@ main {
         color: $veryDarkGrayishBlue;
       }
 
-      &.itemCompleted{
-
-        .btn_listCircle{
-          background: linear-gradient(to bottom right, $gradientColor1, $gradientColor2);
+      &.itemCompleted {
+        .btn_listCircle {
           position: relative;
+          background: linear-gradient(
+            to bottom right,
+            $gradientColor1,
+            $gradientColor2
+          );
 
-          &::after{
+          &::after {
             position: absolute;
             top: 2px;
             left: 1px;
@@ -153,9 +155,8 @@ main {
           }
         }
 
-        p{
-          color: $lightGrayishBlue
-          ;
+        p {
+          color: $lightGrayishBlue;
 
           text-decoration: line-through;
         }
@@ -180,6 +181,16 @@ main {
         border: none;
         font-size: 0.7rem;
         padding: 0.5rem;
+
+        &:focus,
+        &:hover {
+          cursor: pointer;
+          color: $veryDarkGrayishBlue;
+        }
+
+        &:active {
+          color: $brightBlue;
+        }
       }
     }
   }
@@ -203,13 +214,13 @@ main {
       font-weight: 700;
       transition: all 0.2s ease-in-out;
 
-      &.functionActive {
-        color: $brightBlue;
+      &:focus,
+      &:hover {
+        cursor: pointer;
+        color: $veryDarkGrayishBlue;
       }
 
-      &:focus,
-      &:hover{
-        cursor: pointer;
+      &.functionActive {
         color: $brightBlue;
       }
     }
@@ -260,6 +271,18 @@ body.darkTheme {
         button {
           color: $veryDarkGrayishBlueDarkTheme;
         }
+
+        button {
+          &:focus,
+          &:hover {
+            cursor: pointer;
+            color: $lightGrayishBlueDarkTheme;
+          }
+
+          &:active {
+            color: $brightBlue;
+          }
+        }
       }
     }
 
@@ -269,6 +292,16 @@ body.darkTheme {
 
       button {
         color: $veryDarkGrayishBlueDarkTheme;
+
+        &:focus,
+        &:hover {
+          cursor: pointer;
+          color: $lightGrayishBlueDarkTheme;
+        }
+
+        &.functionActive {
+          color: $brightBlue;
+        }
       }
     }
   }

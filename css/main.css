@@ -78,12 +78,7 @@ header button:hover, header button:focus {
   background-color: transparent;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-}
-
-.btn_listCircle:hover, .btn_listCircle:focus {
-  cursor: pointer;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  position: relative;
 }
 
 .btn_removeItem {
@@ -161,9 +156,9 @@ main #listBox .listItem p {
 }
 
 main #listBox .listItem.itemCompleted .btn_listCircle {
+  position: relative;
   background: -webkit-gradient(linear, left top, right bottom, from(#57ddff), to(#c058f3));
   background: linear-gradient(to bottom right, #57ddff, #c058f3);
-  position: relative;
 }
 
 main #listBox .listItem.itemCompleted .btn_listCircle::after {
@@ -207,6 +202,15 @@ main #listBox .bottomInfo button {
   padding: 0.5rem;
 }
 
+main #listBox .bottomInfo button:focus, main #listBox .bottomInfo button:hover {
+  cursor: pointer;
+  color: #484b6a;
+}
+
+main #listBox .bottomInfo button:active {
+  color: #3a7bfd;
+}
+
 main #listFunctionsBox {
   text-align: center;
   padding: 0.5rem;
@@ -231,12 +235,12 @@ main #listFunctionsBox button {
   transition: all 0.2s ease-in-out;
 }
 
-main #listFunctionsBox button.functionActive {
-  color: #3a7bfd;
-}
-
 main #listFunctionsBox button:focus, main #listFunctionsBox button:hover {
   cursor: pointer;
+  color: #484b6a;
+}
+
+main #listFunctionsBox button.functionActive {
   color: #3a7bfd;
 }
 
@@ -287,6 +291,15 @@ body.darkTheme main #listBox .bottomInfo button {
   color: #4d5066;
 }
 
+body.darkTheme main #listBox .bottomInfo button:focus, body.darkTheme main #listBox .bottomInfo button:hover {
+  cursor: pointer;
+  color: #cacde8;
+}
+
+body.darkTheme main #listBox .bottomInfo button:active {
+  color: #3a7bfd;
+}
+
 body.darkTheme main #listFunctionsBox {
   background-color: #25273c;
   -webkit-box-shadow: none;
@@ -295,6 +308,15 @@ body.darkTheme main #listFunctionsBox {
 
 body.darkTheme main #listFunctionsBox button {
   color: #4d5066;
+}
+
+body.darkTheme main #listFunctionsBox button:focus, body.darkTheme main #listFunctionsBox button:hover {
+  cursor: pointer;
+  color: #cacde8;
+}
+
+body.darkTheme main #listFunctionsBox button.functionActive {
+  color: #3a7bfd;
 }
 
 body.darkTheme footer p {
