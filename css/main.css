@@ -149,6 +149,14 @@ main #listBox .listItem {
   border-bottom: 1px solid #e4e5f1;
 }
 
+main #listBox .listItem.dragBorderBottom {
+  border-bottom: 2px solid blue;
+}
+
+main #listBox .listItem.dragBorderTop {
+  border-top: 2px solid blue;
+}
+
 main #listBox .listItem p {
   width: 80%;
   font-size: 0.8rem;
