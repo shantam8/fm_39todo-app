@@ -14,6 +14,9 @@ let btnClearCompleted = document.querySelector("#btn_clear");
 let numberItemsLeft = document.querySelector("#numberItemsLeft");
 
 let itemListArray = [];
+let itemDragSelectedFrom;
+let itemDropSelectedTo;
+const offsetY = 178;
 
 function toggleColorTheme() {
   body.classList.toggle("darkTheme");
@@ -148,42 +151,98 @@ function createListElement(item) {
   newLiElement.appendChild(newListTextElement);
   newLiElement.appendChild(newButtonRemoveItemElement);
 
-
-
   newLiElement.setAttribute("draggable", true);
-
   newLiElement.addEventListener("dragstart", handleDragStart);
-  newLiElement.addEventListener("drag", handleDrag);
-
-  newLiElement.addEventListener("dragend", handleDragEnd);
-
 
   return newLiElement;
 }
 
-function handleDragStart(event){
-  // console.log("start");
-  // console.log(event.target);
-  event.dataTransfer.setData("text/plain", "test");
-  event.target.style.outline = "1px solid red";
+function handleDragStart(event) {
+  itemDragSelectedFrom = event.target.children[1].innerText;
 }
 
-function handleDrag(event){
-  // console.log("drag");
-  // console.log(event.target);
+function handleDragLeave(event) {
+  event.target.closest(".listItem").classList.remove("dragBorderBottom");
+  event.target.closest(".listItem").classList.remove("dragBorderTop");
 }
 
-function handleDragEnd(event){
-  // console.log("end");
-  // console.log(event.target);
-  event.target.style.outline = "none";
+function handleDragOver(event) {
+  event.preventDefault();
+  //console.log(event);
+
+  if (calculatePositionUponItem(event) == "Top") {
+    event.target.closest(".listItem").classList.remove("dragBorderBottom");
+    event.target.closest(".listItem").classList.add("dragBorderTop");
+  } else if (calculatePositionUponItem(event) == "Bottom") {
+    event.target.closest(".listItem").classList.remove("dragBorderTop");
+    event.target.closest(".listItem").classList.add("dragBorderBottom");
+  }
 }
 
-function handleDragOver(event){
+function handleDrop(event) {
+  event.preventDefault();
+  event.target.closest(".listItem").classList.remove("dragBorderBottom");
+  event.target.closest(".listItem").classList.remove("dragBorderTop");
+  itemDropSelectedTo = event.target.closest(".listItem").children[1].innerText;
+  moveItem(calculatePositionUponItem(event));
+}
 
-  console.log("over");
-  console.log(event.target);
+function calculatePositionUponItem(item) {
+  let itemOffsetY = item.clientY - offsetY;
+  itemOffsetY = itemOffsetY % 53;
+  //console.log(itemOffsetY);
+  if (itemOffsetY > 0 && itemOffsetY <= 26.5) {
+    return "Top";
+  } else if (itemOffsetY > 26.5 && itemOffsetY <= 52) {
+    return "Bottom";
+  }
+}
 
+function moveItem(position) {
+  console.log("move");
+
+  console.log(itemListArray);
+
+  if (position == "Top") {
+    console.log(position);
+
+    moveItemIndexCalculation(0);
+  } else if (position == "Bottom") {
+    console.log(position);
+
+    moveItemIndexCalculation(1);
+  }
+
+  console.log(itemListArray);
+
+  saveListToLocalStorage();
+
+  listBoxUlContainer.innerHTML = "";
+  createListOnStart();
+  displayList();
+}
+
+function moveItemIndexCalculation(indexOffset) {
+  if (
+    // downwards
+    itemListArray.indexOf(itemDropSelectedTo) >
+    itemListArray.indexOf(itemDragSelectedFrom)
+  ) {
+    itemListArray.splice(
+      itemListArray.indexOf(itemDropSelectedTo) + indexOffset,
+      0,
+      itemDragSelectedFrom
+    );
+    itemListArray.splice(itemListArray.indexOf(itemDragSelectedFrom), 1);
+  } else {
+    // upwards
+    itemListArray.splice(itemListArray.indexOf(itemDragSelectedFrom), 1);
+    itemListArray.splice(
+      itemListArray.indexOf(itemDropSelectedTo) + indexOffset,
+      0,
+      itemDragSelectedFrom
+    );
+  }
 }
 
 function saveListToLocalStorage() {
@@ -216,7 +275,9 @@ function init() {
 
   btnClearCompleted.addEventListener("click", handleClearCompleted);
 
-  listBoxUlContainer.addEventListener("dragover", handleDragOver)
+  listBoxUlContainer.addEventListener("drop", handleDrop);
+  listBoxUlContainer.addEventListener("dragover", handleDragOver);
+  listBoxUlContainer.addEventListener("dragleave", handleDragLeave);
 }
 
 window.onload = init;
