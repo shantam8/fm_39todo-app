@@ -102,14 +102,13 @@ header button:hover, header button:focus {
 }
 
 .btn_listCircle {
+  position: relative;
   width: 20px;
   height: 20px;
-  border-radius: 11px;
   border: 1px solid #d2d3db;
+  border-radius: 11px;
   background-color: transparent;
   -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  position: relative;
   transition: all 0.2s ease-in-out;
 }
 
@@ -122,11 +121,11 @@ header button:hover, header button:focus {
 .btn_removeItem {
   width: 13px;
   height: 13px;
-  background-image: url("../images/icon-cross.svg");
-  background-repeat: no-repeat;
-  background-color: transparent;
   border: none;
+  background-color: transparent;
+  background-image: url("../images/icon-cross.svg");
   background-position: center;
+  background-repeat: no-repeat;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
@@ -138,10 +137,10 @@ header button:hover, header button:focus {
 }
 
 main #addItemBox {
+  margin-top: 2rem;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   background-color: white;
-  margin-top: 2rem;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
@@ -151,16 +150,16 @@ main #addItemBox button {
 }
 
 main #addItemBox input {
+  width: 75%;
   height: 28px;
   margin-left: 7px;
   padding: 0.3rem;
-  vertical-align: middle;
-  width: 75%;
+  border: none;
   font-size: 0.7rem;
   color: #484b6a;
-  border: none;
   -webkit-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
+  vertical-align: middle;
 }
 
 @media screen and (min-width: 40rem) {
@@ -172,14 +171,14 @@ main #addItemBox input {
 main #listBox {
   margin-top: 1rem;
   border-radius: 8px;
-  background-color: white;
   -webkit-box-shadow: 0 0 20px -7px #9394a5;
           box-shadow: 0 0 20px -7px #9394a5;
+  background-color: white;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-main #listBox .listItem {
+main .listItem {
   padding: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -193,26 +192,26 @@ main #listBox .listItem {
   border-bottom: 1px solid #e4e5f1;
 }
 
-main #listBox .listItem.borderBottomNone {
+main .listItem.borderBottomNone {
   border-bottom: none;
 }
 
-main #listBox .listItem.dragBorderBottom {
+main .listItem.dragBorderBottom {
   border-bottom: 2px solid blue;
 }
 
-main #listBox .listItem.dragBorderTop {
+main .listItem.dragBorderTop {
   border-top: 2px solid blue;
 }
 
-main #listBox .listItem p {
+main .listItem p {
   width: 80%;
   font-size: 0.8rem;
   color: #484b6a;
 }
 
 @media screen and (min-width: 40rem) {
-  main #listBox .listItem p {
+  main .listItem p {
     width: 88%;
     font-size: 1.1rem;
     -ms-flex-item-align: end;
@@ -221,13 +220,13 @@ main #listBox .listItem p {
   }
 }
 
-main #listBox .listItem.itemCompleted .btn_listCircle {
+main .listItem.itemCompleted .btn_listCircle {
   position: relative;
   background: -webkit-gradient(linear, left top, right bottom, from(#57ddff), to(#c058f3));
   background: linear-gradient(to bottom right, #57ddff, #c058f3);
 }
 
-main #listBox .listItem.itemCompleted .btn_listCircle::after {
+main .listItem.itemCompleted .btn_listCircle::after {
   position: absolute;
   top: 2px;
   left: 1px;
@@ -236,12 +235,12 @@ main #listBox .listItem.itemCompleted .btn_listCircle::after {
   content: url("../images/icon-check.svg");
 }
 
-main #listBox .listItem.itemCompleted p {
+main .listItem.itemCompleted p {
   color: #d2d3db;
   text-decoration: line-through;
 }
 
-main #listBox .bottomInfo {
+main .bottomInfo {
   padding: 0.5rem;
   padding-left: 1rem;
   display: -webkit-box;
@@ -255,48 +254,85 @@ main #listBox .bottomInfo {
           align-items: center;
 }
 
-main #listBox .bottomInfo p {
+main .bottomInfo p {
   font-size: 0.7rem;
   color: #9394a5;
 }
 
-main #listBox .bottomInfo button {
-  color: #9394a5;
-  background-color: transparent;
+main .bottomInfo .listFunctionBtns {
+  display: none;
+}
+
+@media screen and (min-width: 40rem) {
+  main .bottomInfo .listFunctionBtns {
+    display: block;
+  }
+}
+
+main .bottomInfo .listFunctionBtns button {
+  margin: 0 5px;
+  padding: 0.5rem;
   border: none;
-  font-size: 0.7rem;
-  padding: 0.5rem;
-}
-
-main #listBox .bottomInfo button:focus, main #listBox .bottomInfo button:hover {
-  cursor: pointer;
-  color: #484b6a;
-}
-
-main #listBox .bottomInfo button:active {
-  color: #3a7bfd;
-}
-
-main #listFunctionsBox {
-  text-align: center;
-  padding: 0.5rem;
-  margin-top: 1rem;
-  border-radius: 8px;
-  background-color: white;
-  -webkit-box-shadow: 0 0 20px -7px #9394a5;
-          box-shadow: 0 0 20px -7px #9394a5;
+  background-color: transparent;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #9394a5;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 
-main #listFunctionsBox button {
-  color: #9394a5;
-  background-color: transparent;
+main .bottomInfo .listFunctionBtns button:focus, main .bottomInfo .listFunctionBtns button:hover {
+  cursor: pointer;
+  color: #484b6a;
+}
+
+main .bottomInfo .listFunctionBtns button.functionActive {
+  color: #3a7bfd;
+}
+
+main .bottomInfo #btn_clear {
   padding: 0.5rem;
   border: none;
-  font-size: 0.8rem;
+  background-color: transparent;
+  color: #9394a5;
+  font-size: 0.7rem;
+}
+
+main .bottomInfo #btn_clear:focus, main .bottomInfo #btn_clear:hover {
+  cursor: pointer;
+  color: #484b6a;
+}
+
+main .bottomInfo #btn_clear:active {
+  color: #3a7bfd;
+}
+
+main #listFunctionsBox {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: white;
+  -webkit-box-shadow: 0 0 20px -7px #9394a5;
+          box-shadow: 0 0 20px -7px #9394a5;
+  text-align: center;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+@media screen and (min-width: 40rem) {
+  main #listFunctionsBox {
+    display: none;
+  }
+}
+
+main #listFunctionsBox button {
   margin: 0 5px;
+  padding: 0.5rem;
+  border: none;
+  background-color: transparent;
+  font-size: 0.8rem;
   font-weight: 700;
+  color: #9394a5;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
@@ -359,16 +395,29 @@ body.darkTheme main #listBox .listItem p {
 }
 
 body.darkTheme main #listBox .bottomInfo p,
-body.darkTheme main #listBox .bottomInfo button {
+body.darkTheme main #listBox .bottomInfo #btn_clear {
   color: #4d5066;
 }
 
-body.darkTheme main #listBox .bottomInfo button:focus, body.darkTheme main #listBox .bottomInfo button:hover {
+body.darkTheme main #listBox .bottomInfo .listFunctionBtns button {
+  color: #4d5066;
+}
+
+body.darkTheme main #listBox .bottomInfo .listFunctionBtns button:focus, body.darkTheme main #listBox .bottomInfo .listFunctionBtns button:hover {
   cursor: pointer;
   color: #cacde8;
 }
 
-body.darkTheme main #listBox .bottomInfo button:active {
+body.darkTheme main #listBox .bottomInfo .listFunctionBtns button.functionActive {
+  color: #3a7bfd;
+}
+
+body.darkTheme main #listBox .bottomInfo #btn_clear:focus, body.darkTheme main #listBox .bottomInfo #btn_clear:hover {
+  cursor: pointer;
+  color: #cacde8;
+}
+
+body.darkTheme main #listBox .bottomInfo #btn_clear:active {
   color: #3a7bfd;
 }
 

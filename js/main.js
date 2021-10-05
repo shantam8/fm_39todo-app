@@ -1,21 +1,18 @@
 let body = document.querySelector("body");
 let btnToggleTheme = document.querySelector("#btnToggleTheme");
-let btnsFunctionBar = document.querySelectorAll("#listFunctionsBox button");
+let btnsShowFunction = document.querySelectorAll(".btnListFunction");
 let activeFunction = "showAll";
 
-let inputItem = document.querySelector("#inputItem");
-let btnInputItemCompleted = document.querySelector("#btnInputItemCompleted");
+let inputTask = document.querySelector("#inputTask");
 
 let listBoxUlContainer = document.getElementById("listBoxUlContainer");
-let listItems = document.getElementsByClassName("listItem");
+let listItemElements = document.getElementsByClassName("listItem");
 
 let btnsToggleItemCompleted = document.getElementsByClassName("btn_listCircle");
 let btnClearCompleted = document.querySelector("#btn_clear");
-
 let numberItemsLeft = document.querySelector("#numberItemsLeft");
 
 let itemListArray = [];
-
 let itemDragSelectedFrom;
 let itemDropSelectedTo;
 let offsetY = 0;
@@ -25,49 +22,55 @@ function toggleColorTheme() {
 }
 
 function toggleShowElements(event) {
-  btnsFunctionBar.forEach((button) => {
+  btnsShowFunction.forEach((button) => {
     button.classList.remove("functionActive");
   });
-  event.target.classList.add("functionActive");
 
   if (event.target.value == "showActive") {
     activeFunction = "showActive";
+    document.querySelectorAll(".btn_showActive").forEach((button) => {
+      button.classList.add("functionActive");
+    });
   } else if (event.target.value == "showCompleted") {
     activeFunction = "showCompleted";
+    document.querySelectorAll(".btn_showCompleted").forEach((button) => {
+      button.classList.add("functionActive");
+    });
   } else {
     activeFunction = "showAll";
+    document.querySelectorAll(".btn_showAll").forEach((button) => {
+      button.classList.add("functionActive");
+    });
   }
   displayList();
 }
 
 function displayList() {
-  for (let i = 0; i < listItems.length; i++) {
-    listItems[i].style.display = "flex";
+  for (let i = 0; i < listItemElements.length; i++) {
+    listItemElements[i].style.display = "flex";
   }
   let counter = 0;
-
   switch (activeFunction) {
     case "showAll":
       displayNumberItemsLeft();
-
       break;
+
     case "showActive":
-      for (let i = 0; i < listItems.length; i++) {
-        if (listItems[i].classList.contains("itemCompleted")) {
-          listItems[i].style.display = "none";
+      for (let i = 0; i < listItemElements.length; i++) {
+        if (listItemElements[i].classList.contains("itemCompleted")) {
+          listItemElements[i].style.display = "none";
         } else {
           counter++;
         }
       }
       console.log("active " + counter);
-
       displayNumberItemsLeft(counter);
       break;
 
     case "showCompleted":
-      for (let i = 0; i < listItems.length; i++) {
-        if (!listItems[i].classList.contains("itemCompleted")) {
-          listItems[i].style.display = "none";
+      for (let i = 0; i < listItemElements.length; i++) {
+        if (!listItemElements[i].classList.contains("itemCompleted")) {
+          listItemElements[i].style.display = "none";
         } else {
           counter++;
         }
@@ -88,28 +91,27 @@ function displayNumberItemsLeft(numberItemsDisplayed) {
 function addItemHandler() {
   let doubleEntry = false;
   itemListArray.forEach((item) => {
-    if (item.text == inputItem.value) {
-      console.log("gibbet schon");
+    if (item.text == inputTask.value) {
       doubleEntry = true;
       return;
     }
   });
   if (doubleEntry) {
-    inputItem.value = "";
+    inputTask.value = "";
     return;
   }
-  listBoxUlContainer.appendChild(createListElement(inputItem.value));
-  itemListArray.push({ text: inputItem.value, completed: false });
+  listBoxUlContainer.appendChild(createListElement(inputTask.value));
+  itemListArray.push({ text: inputTask.value, completed: false });
 
   saveListToLocalStorage();
   displayList();
-  inputItem.value = "";
+  inputTask.value = "";
 }
 
 function handleClearCompleted() {
-  for (let i = listItems.length - 1; i >= 0; i--) {
-    if (listItems[i].classList.contains("itemCompleted")) {
-      listItems[i].lastChild.click();
+  for (let i = listItemElements.length - 1; i >= 0; i--) {
+    if (listItemElements[i].classList.contains("itemCompleted")) {
+      listItemElements[i].lastChild.click();
     }
   }
 }
@@ -153,7 +155,6 @@ function createListElement(item, completed) {
   if (completed) {
     newLiElement.classList.add("itemCompleted");
   }
-
   newButtonListCircleElement.classList.add("btn_listCircle");
   newButtonListCircleElement.addEventListener("click", toggleItemCompleted);
   newListTextElement.classList.add("listText");
@@ -164,10 +165,8 @@ function createListElement(item, completed) {
   newLiElement.appendChild(newButtonListCircleElement);
   newLiElement.appendChild(newListTextElement);
   newLiElement.appendChild(newButtonRemoveItemElement);
-
   newLiElement.setAttribute("draggable", true);
   newLiElement.addEventListener("dragstart", handleDragStart);
-
   return newLiElement;
 }
 
@@ -187,9 +186,6 @@ function handleDragLeave(event) {
 
 function handleDragOver(event) {
   event.preventDefault();
-
-  console.log(event.clientY);
-
   if (calculatePositionUponItem(event) == "Top") {
     if (event.target.closest(".listItem").previousElementSibling) {
       event.target
@@ -237,14 +233,8 @@ function moveItem(position) {
   } else if (position == "Bottom") {
     moveItemIndexCalculation(1);
   }
-
-  console.log(itemListArray);
-
   saveListToLocalStorage();
-
   listBoxUlContainer.innerHTML = "";
-  console.log(itemListArray);
-
   createListOnStart();
   displayList();
 }
@@ -263,24 +253,19 @@ function moveItemIndexCalculation(indexOffset) {
 
   if (tmpIndexTo > tmpIndexFrom) {
     // downwards
-
     itemListArray.splice(
       tmpIndexTo + indexOffset,
       0,
       itemListArray[tmpIndexFrom]
     );
-
     itemListArray.splice(tmpIndexFrom, 1);
   } else {
     // upwards
-    console.log("upwards:");
-
     itemListArray.splice(
       tmpIndexTo + indexOffset,
       0,
       itemListArray[tmpIndexFrom]
     );
-
     itemListArray.splice(tmpIndexFrom + 1, 1);
   }
 }
@@ -321,8 +306,8 @@ function init() {
 
   btnToggleTheme.addEventListener("click", toggleColorTheme);
 
-  inputItem.addEventListener("change", addItemHandler);
-  btnsFunctionBar.forEach((button) => {
+  inputTask.addEventListener("change", addItemHandler);
+  btnsShowFunction.forEach((button) => {
     button.addEventListener("click", toggleShowElements);
   });
 

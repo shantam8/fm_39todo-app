@@ -13,40 +13,72 @@
     <script src="./js/main.js" defer></script>
     <title>Frontend Mentor | Todo app | shantam8</title>
   </head>
-  <body >
+  <body>
     <div class="bgHelper">
       <header>
         <h1 id="logo">Todo</h1>
-        <button id="btnToggleTheme"></button>
+        <button
+          id="btnToggleTheme"
+          aria-label="toggle light and dark mode"
+        ></button>
       </header>
+
       <main>
         <div id="addItemBox">
-
-
-          
           <div id="addListItem">
             <button id="btnInputItemCompleted" class="btn_listCircle"></button>
-            <input id="inputItem" type="text" placeholder="Create a new todo...">
+            <input
+              id="inputTask"
+              type="text"
+              placeholder="Create a new todo..."
+              aria-label="please enter a new to-do"
+            />
           </div>
         </div>
-        
+
         <div id="listBox">
-          <ul id="listBoxUlContainer">
-          </ul>
+          <ul id="listBoxUlContainer"></ul>
           <div class="bottomInfo">
             <p>
               <span id="numberItemsLeft">0</span>
               items left
             </p>
-            
+            <div class="listFunctionBtns">
+              <button
+                class="btn_showAll btnListFunction functionActive"
+                value="showAll"
+              >
+                All
+              </button>
+              <button class="btn_showActive btnListFunction" value="showActive">
+                Active
+              </button>
+              <button
+                class="btn_showCompleted btnListFunction"
+                value="showCompleted"
+              >
+                Completed
+              </button>
+            </div>
             <button id="btn_clear">Clear Completed</button>
           </div>
-          
         </div>
         <div id="listFunctionsBox">
-          <button id="btn_showAll" class="functionActive" value="showAll">All</button>
-          <button id="btn_showActive" value="showActive">Active</button>
-          <button id="btn_showCompleted" value="showCompleted">Completed</button>
+          <button
+            class="btn_showAll btnListFunction functionActive"
+            value="showAll"
+          >
+            All
+          </button>
+          <button class="btn_showActive btnListFunction" value="showActive">
+            Active
+          </button>
+          <button
+            class="btn_showCompleted btnListFunction"
+            value="showCompleted"
+          >
+            Completed
+          </button>
         </div>
       </main>
 
