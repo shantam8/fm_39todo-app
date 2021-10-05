@@ -8,15 +8,17 @@ let btnInputItemCompleted = document.querySelector("#btnInputItemCompleted");
 
 let listBoxUlContainer = document.getElementById("listBoxUlContainer");
 let listItems = document.getElementsByClassName("listItem");
+
 let btnsToggleItemCompleted = document.getElementsByClassName("btn_listCircle");
 let btnClearCompleted = document.querySelector("#btn_clear");
 
 let numberItemsLeft = document.querySelector("#numberItemsLeft");
 
 let itemListArray = [];
+
 let itemDragSelectedFrom;
 let itemDropSelectedTo;
-const offsetY = 178;
+let offsetY = 0;
 
 function toggleColorTheme() {
   body.classList.toggle("darkTheme");
@@ -86,7 +88,7 @@ function displayNumberItemsLeft(numberItemsDisplayed) {
 function addItemHandler() {
   let doubleEntry = false;
   itemListArray.forEach((item) => {
-    if (item == inputItem.value) {
+    if (item.text == inputItem.value) {
       console.log("gibbet schon");
       doubleEntry = true;
       return;
@@ -96,8 +98,9 @@ function addItemHandler() {
     inputItem.value = "";
     return;
   }
-  itemListArray.push(inputItem.value);
   listBoxUlContainer.appendChild(createListElement(inputItem.value));
+  itemListArray.push({ text: inputItem.value, completed: false });
+
   saveListToLocalStorage();
   displayList();
   inputItem.value = "";
@@ -120,7 +123,7 @@ function removeListItem(event) {
   event.target.parentElement.remove();
 
   itemListArray = itemListArray.filter((value) => {
-    if (value != event.target.previousSibling.innerText) {
+    if (value.text != event.target.previousSibling.innerText) {
       return value;
     }
   });
@@ -131,15 +134,26 @@ function removeListItem(event) {
 function toggleItemCompleted(event) {
   event.target.parentElement.classList.toggle("itemCompleted");
   displayList();
+
+  itemListArray.forEach((item) => {
+    if (event.target.nextSibling.innerText == item.text) {
+      item.completed = !item.completed;
+      saveListToLocalStorage();
+    }
+  });
 }
 
-function createListElement(item) {
+function createListElement(item, completed) {
   let newLiElement = document.createElement("li");
   let newButtonListCircleElement = document.createElement("button");
   let newListTextElement = document.createElement("p");
   let newButtonRemoveItemElement = document.createElement("button");
 
   newLiElement.classList.add("listItem");
+  if (completed) {
+    newLiElement.classList.add("itemCompleted");
+  }
+
   newButtonListCircleElement.classList.add("btn_listCircle");
   newButtonListCircleElement.addEventListener("click", toggleItemCompleted);
   newListTextElement.classList.add("listText");
@@ -162,18 +176,34 @@ function handleDragStart(event) {
 }
 
 function handleDragLeave(event) {
+  if (event.target.closest(".listItem").previousElementSibling) {
+    event.target
+      .closest(".listItem")
+      .previousElementSibling.classList.remove("borderBottomNone");
+  }
   event.target.closest(".listItem").classList.remove("dragBorderBottom");
   event.target.closest(".listItem").classList.remove("dragBorderTop");
 }
 
 function handleDragOver(event) {
   event.preventDefault();
-  //console.log(event);
+
+  console.log(event.clientY);
 
   if (calculatePositionUponItem(event) == "Top") {
+    if (event.target.closest(".listItem").previousElementSibling) {
+      event.target
+        .closest(".listItem")
+        .previousElementSibling.classList.add("borderBottomNone");
+    }
     event.target.closest(".listItem").classList.remove("dragBorderBottom");
     event.target.closest(".listItem").classList.add("dragBorderTop");
   } else if (calculatePositionUponItem(event) == "Bottom") {
+    if (event.target.closest(".listItem").previousElementSibling) {
+      event.target
+        .closest(".listItem")
+        .previousElementSibling.classList.remove("borderBottomNone");
+    }
     event.target.closest(".listItem").classList.remove("dragBorderTop");
     event.target.closest(".listItem").classList.add("dragBorderBottom");
   }
@@ -184,13 +214,16 @@ function handleDrop(event) {
   event.target.closest(".listItem").classList.remove("dragBorderBottom");
   event.target.closest(".listItem").classList.remove("dragBorderTop");
   itemDropSelectedTo = event.target.closest(".listItem").children[1].innerText;
+
+  if (itemDropSelectedTo == itemDragSelectedFrom) {
+    return;
+  }
   moveItem(calculatePositionUponItem(event));
 }
 
 function calculatePositionUponItem(item) {
   let itemOffsetY = item.clientY - offsetY;
   itemOffsetY = itemOffsetY % 53;
-  //console.log(itemOffsetY);
   if (itemOffsetY > 0 && itemOffsetY <= 26.5) {
     return "Top";
   } else if (itemOffsetY > 26.5 && itemOffsetY <= 52) {
@@ -199,17 +232,9 @@ function calculatePositionUponItem(item) {
 }
 
 function moveItem(position) {
-  console.log("move");
-
-  console.log(itemListArray);
-
   if (position == "Top") {
-    console.log(position);
-
     moveItemIndexCalculation(0);
   } else if (position == "Bottom") {
-    console.log(position);
-
     moveItemIndexCalculation(1);
   }
 
@@ -218,50 +243,78 @@ function moveItem(position) {
   saveListToLocalStorage();
 
   listBoxUlContainer.innerHTML = "";
+  console.log(itemListArray);
+
   createListOnStart();
   displayList();
 }
 
 function moveItemIndexCalculation(indexOffset) {
-  if (
+  let tmpIndexTo, tmpIndexFrom;
+
+  itemListArray.map((item, index) => {
+    if (itemDropSelectedTo == item.text) {
+      tmpIndexTo = index;
+    }
+    if (itemDragSelectedFrom == item.text) {
+      tmpIndexFrom = index;
+    }
+  });
+
+  if (tmpIndexTo > tmpIndexFrom) {
     // downwards
-    itemListArray.indexOf(itemDropSelectedTo) >
-    itemListArray.indexOf(itemDragSelectedFrom)
-  ) {
+
     itemListArray.splice(
-      itemListArray.indexOf(itemDropSelectedTo) + indexOffset,
+      tmpIndexTo + indexOffset,
       0,
-      itemDragSelectedFrom
+      itemListArray[tmpIndexFrom]
     );
-    itemListArray.splice(itemListArray.indexOf(itemDragSelectedFrom), 1);
+
+    itemListArray.splice(tmpIndexFrom, 1);
   } else {
     // upwards
-    itemListArray.splice(itemListArray.indexOf(itemDragSelectedFrom), 1);
+    console.log("upwards:");
+
     itemListArray.splice(
-      itemListArray.indexOf(itemDropSelectedTo) + indexOffset,
+      tmpIndexTo + indexOffset,
       0,
-      itemDragSelectedFrom
+      itemListArray[tmpIndexFrom]
     );
+
+    itemListArray.splice(tmpIndexFrom + 1, 1);
   }
 }
 
 function saveListToLocalStorage() {
-  window.localStorage.setItem("ToDo-list", itemListArray);
+  window.localStorage.setItem("ToDo-list", JSON.stringify(itemListArray));
 }
 
 function loadListFromLocalStorage() {
   if (window.localStorage.getItem("ToDo-list")) {
-    itemListArray = window.localStorage.getItem("ToDo-list").split(",");
+    itemListArray = JSON.parse(window.localStorage.getItem("ToDo-list"));
   }
 }
 
 function createListOnStart() {
-  itemListArray.forEach((item) => {
-    listBoxUlContainer.appendChild(createListElement(item));
-  });
+  if (itemListArray.length > 0) {
+    itemListArray.forEach((item) => {
+      listBoxUlContainer.appendChild(
+        createListElement(item.text, item.completed)
+      );
+    });
+  }
+}
+
+function setOffset() {
+  if (screen.width <= 540) {
+    offsetY = 178;
+  } else {
+    offsetY = 224;
+  }
 }
 
 function init() {
+  setOffset();
   loadListFromLocalStorage();
   createListOnStart();
   displayList();
@@ -278,6 +331,8 @@ function init() {
   listBoxUlContainer.addEventListener("drop", handleDrop);
   listBoxUlContainer.addEventListener("dragover", handleDragOver);
   listBoxUlContainer.addEventListener("dragleave", handleDragLeave);
+
+  window.addEventListener("resize", setOffset);
 }
 
 window.onload = init;

@@ -27,10 +27,28 @@ body {
   transition: all 0.2s ease-in-out;
 }
 
+@media screen and (min-width: 23.4375rem) {
+  body {
+    background-image: url("../images/bg-desktop-light.jpg");
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  body {
+    background-size: contain;
+  }
+}
+
 .bgHelper {
   width: 20rem;
-  margin: 0 auto;
-  margin-top: 3rem;
+  margin: 3rem auto;
+}
+
+@media screen and (min-width: 40rem) {
+  .bgHelper {
+    width: 33.75rem;
+    margin-top: 5rem;
+  }
 }
 
 header {
@@ -52,6 +70,12 @@ header h1 {
   text-transform: uppercase;
 }
 
+@media screen and (min-width: 40rem) {
+  header h1 {
+    font-size: 2.7rem;
+  }
+}
+
 header button {
   width: 18px;
   height: 18px;
@@ -62,6 +86,13 @@ header button {
   background-size: cover;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
+}
+
+@media screen and (min-width: 40rem) {
+  header button {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 header button:hover, header button:focus {
@@ -79,6 +110,13 @@ header button:hover, header button:focus {
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn_listCircle:hover {
+  cursor: pointer;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 .btn_removeItem {
@@ -125,6 +163,12 @@ main #addItemBox input {
   transition: 0.2s ease-in-out;
 }
 
+@media screen and (min-width: 40rem) {
+  main #addItemBox input {
+    font-size: 1rem;
+  }
+}
+
 main #listBox {
   margin-top: 1rem;
   border-radius: 8px;
@@ -149,6 +193,10 @@ main #listBox .listItem {
   border-bottom: 1px solid #e4e5f1;
 }
 
+main #listBox .listItem.borderBottomNone {
+  border-bottom: none;
+}
+
 main #listBox .listItem.dragBorderBottom {
   border-bottom: 2px solid blue;
 }
@@ -161,6 +209,16 @@ main #listBox .listItem p {
   width: 80%;
   font-size: 0.8rem;
   color: #484b6a;
+}
+
+@media screen and (min-width: 40rem) {
+  main #listBox .listItem p {
+    width: 88%;
+    font-size: 1.1rem;
+    -ms-flex-item-align: end;
+        -ms-grid-row-align: end;
+        align-self: end;
+  }
 }
 
 main #listBox .listItem.itemCompleted .btn_listCircle {
@@ -265,6 +323,12 @@ footer p {
 body.darkTheme {
   background-color: #161722;
   background-image: url("../images/bg-mobile-dark.jpg");
+}
+
+@media screen and (min-width: 23.4375rem) {
+  body.darkTheme {
+    background-image: url("../images/bg-desktop-dark.jpg");
+  }
 }
 
 body.darkTheme .btn_listCircle {

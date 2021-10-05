@@ -14,7 +14,6 @@ button,
 input {
   font-family: "Josefin Sans", sans-serif; // 4 7
   font-weight: 400;
-  
 }
 
 li {
@@ -27,12 +26,24 @@ body {
   background-position: top center;
   background-repeat: no-repeat;
   transition: all 0.2s ease-in-out;
+
+  @media screen and (min-width: 23.4375rem) {
+    background-image: url("../images/bg-desktop-light.jpg");
+  }
+
+  @media screen and (min-width:90rem) {
+    background-size: contain;
+  }
 }
 
 .bgHelper {
   width: 20rem;
-  margin: 0 auto;
-  margin-top: 3rem;
+  margin: 3rem auto;
+
+  @media screen and (min-width: 40rem) {
+    width: 33.75rem;
+    margin-top: 5rem;
+  }
 }
 
 header {
@@ -45,6 +56,10 @@ header {
     font-weight: 700;
     letter-spacing: 8px;
     text-transform: uppercase;
+
+    @media screen and (min-width: 40rem) {
+      font-size: 2.7rem;
+    }
   }
 
   button {
@@ -56,6 +71,11 @@ header {
     background-position: center;
     background-size: cover;
     transition: all 0.2s ease-in-out;
+
+    @media screen and (min-width: 40rem) {
+      width: 32px;
+      height: 32px;
+    }
 
     &:hover,
     &:focus {
@@ -73,6 +93,12 @@ header {
   background-color: transparent;
   transition: all 0.2s ease-in-out;
   position: relative;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
 }
 
 .btn_removeItem {
@@ -114,6 +140,10 @@ main {
       color: $veryDarkGrayishBlue;
       border: none;
       transition: 0.2s ease-in-out;
+
+      @media screen and (min-width: 40rem) {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -131,11 +161,15 @@ main {
       align-items: center;
       border-bottom: 1px solid $veryLightGrayishBlue;
 
-      &.dragBorderBottom{
+      &.borderBottomNone {
+        border-bottom: none;
+      }
+
+      &.dragBorderBottom {
         border-bottom: 2px solid blue;
       }
 
-      &.dragBorderTop{
+      &.dragBorderTop {
         border-top: 2px solid blue;
       }
 
@@ -143,6 +177,12 @@ main {
         width: 80%;
         font-size: 0.8rem;
         color: $veryDarkGrayishBlue;
+
+        @media screen and (min-width: 40rem) {
+          width: 88%;
+          font-size: 1.1rem;
+          align-self: end;
+        }
       }
 
       &.itemCompleted {
@@ -249,6 +289,10 @@ footer {
 body.darkTheme {
   background-color: $veryDarkBlueDarkTheme;
   background-image: url("../images/bg-mobile-dark.jpg");
+
+  @media screen and (min-width: 23.4375rem) {
+    background-image: url("../images/bg-desktop-dark.jpg");
+  }
 
   .btn_listCircle {
     border: 1px solid $veryDarkGrayishBlueDarkTheme;
