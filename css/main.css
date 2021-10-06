@@ -42,6 +42,7 @@ body {
 .bgHelper {
   width: 20rem;
   margin: 3rem auto;
+  margin-bottom: 5rem;
 }
 
 @media screen and (min-width: 40rem) {
